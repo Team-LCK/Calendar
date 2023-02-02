@@ -6,10 +6,12 @@ const mongoose=require('mongoose');
 const bodyParser=require('body-parser');
 const {User} =require('./User');
 
+const config=require('./config/key');
+
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
-mongoose.connect("mongodb+srv://brian:gusals990^^@cluster0.ubanbwm.mongodb.net/test")
+mongoose.connect(config.mongoURI)
 .then(()=>console.log("MongoDB connected"))
 .catch(err=>console.log(err));
 
