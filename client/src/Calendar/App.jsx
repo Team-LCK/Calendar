@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import moment from 'moment'
-import Header from "./Header.jsx";
-import Calendar from "./Calendar.jsx";
-import './style/RCA.css'
+import moment from 'moment';
+import Header from "./Header";
+import Calendar from "./Calendar";
+import './style/RCA.css';
 
 function App() {
 
