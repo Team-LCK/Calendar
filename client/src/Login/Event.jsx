@@ -76,13 +76,8 @@ import axios from 'axios';
 
 function Event(){
 
-    let body ={
-        email: "",
-        password: ""
-    }
-
-    const [Email, setEmail] = useState("")
-    const [Password, setPassword] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value)
@@ -94,20 +89,14 @@ function Event(){
 
 
     const onSubmitHandler = (event) => {
-        event.preventDefault();
-        body.email = Email
-        body.password = Password
-        console.log(body.email)
-        console.log(body.password)
+        axios.post("http://localhost:5000/login",{
+            email,
+            password
+        }).then(console.log("서버 전송 완료"))
     
     }
     
-    useEffect(() => {
-        if(onSubmitHandler){
-        axios.post('http://localhost:5000/login',body)
-        .then(response=>console.log("서버 전송 완료 "))
-        }
-    },[])
+    
     
 
     return(

@@ -94,57 +94,35 @@ import axios from 'axios';
 
 function Register(){
 
-    let body ={
-        name: "",
-        email: "",
-        password: "",
-        confirmpassword: "",
-    }
-
-    const [Name, setName] = useState("")
-    const [Email, setEmail] =useState("")
-    const [Password, setPassword] = useState("")
-    const [ConfirmPassword, setConfirmPassword] = useState("")
+    const [name, setName] = useState("")
+    const [email, setEmail] =useState("")
+    const [password, setPassword] = useState("")
 
     const onNameHandler = (event) => {
         setName(event.currentTarget.value)
     }
 
     const onEmailHandler = (event) => {
-        setEmail(event.currentTarget.value)
+       setEmail(event.currentTarget.value)
     }
 
     const onPasswordHandler = (event) => {
         setPassword(event.currentTarget.value)
     }
 
-    const onConfirmPasswordHandler = (event) => {
-        setConfirmPassword(event.currentTarget.value)
-    }
-
-    const onSubmitHandler = (event) => {
-        event.preventDefault();
-        body.name = Name
-        body.email = Email
-        body.password = Password
-        body.confirmpassword = ConfirmPassword
-        console.log(body.name)
-        console.log(body.email)
-        console.log(body.password)
-        console.log(body.confirmpassword)
+    const onSubmit = (event) => {
+        axios.post("http://localhost:5000/register",{
+            name,
+            email,
+            password
+        }).then(console.log("서버 전송 완료"))
 
     }
 
-    useEffect(() => {
-        if(onSubmitHandler.onChange){
-            axios.post('http://localhost:5000/register',body)
-            .then(response=>console.log("서버 전송 완료"))
-        }
-    },[])
 
 
     return(
-        <Formik initialValues={{name: "", email: "", password: "", Confirmpassword: ""}}
+        <Formik initialValues={{name: "", email: "", password: ""}}
                 validationSchema={Yup.object().shape({
                     name: Yup.string()
                     .required("Name is required"),
@@ -154,9 +132,6 @@ function Register(){
                     password: Yup.string()
                     .min(6, "Password must be at least 6 characters")
                     .required("Password is required"),
-                    Confirmpassword: Yup.string()
-                    .oneOf([Yup.ref("password"), null], "Passwords must match")
-                    .required("Confirm Password is required"),
                 })}
                 >
                 
@@ -173,12 +148,8 @@ function Register(){
                     <Form.Item required label = "Password">
                         <Input id="Password" placeholder="Enter your Password" type="Password" onChange={onPasswordHandler} />
                     </Form.Item>
-                    <div><h2>비밀번호 확인</h2></div>
-                    <Form.Item required label ="Password">
-                        <Input id="Password" placeholder="Confirm your Password" type="Password" onChange={onConfirmPasswordHandler} />
-                    </Form.Item>
 
-                    <Button onChange={onSubmitHandler}>회원가입하기</Button>
+                    <Button onClick={onSubmit}>회원가입하기</Button>
                 </Form>
 
 
