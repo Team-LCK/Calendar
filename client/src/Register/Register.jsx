@@ -1,8 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {Form, Input, Button} from "antd";
-
+import axios from 'axios';
 /*const Register =() => {
     
     const [form, setForm] = useState({
@@ -93,6 +93,56 @@ import {Form, Input, Button} from "antd";
 */
 
 function Register(){
+
+    let body ={
+        name: "",
+        email: "",
+        password: "",
+        confirmpassword: "",
+    }
+
+    const [Name, setName] = useState("")
+    const [Email, setEmail] =useState("")
+    const [Password, setPassword] = useState("")
+    const [ConfirmPassword, setConfirmPassword] = useState("")
+
+    const onNameHandler = (event) => {
+        setName(event.currentTarget.value)
+    }
+
+    const onEmailHandler = (event) => {
+        setEmail(event.currentTarget.value)
+    }
+
+    const onPasswordHandler = (event) => {
+        setPassword(event.currentTarget.value)
+    }
+
+    const onConfirmPasswordHandler = (event) => {
+        setConfirmPassword(event.currentTarget.value)
+    }
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault();
+        body.name = Name
+        body.email = Email
+        body.password = Password
+        body.confirmpassword = ConfirmPassword
+        console.log(body.name)
+        console.log(body.email)
+        console.log(body.password)
+        console.log(body.confirmpassword)
+
+    }
+
+    useEffect(() => {
+        if(onSubmitHandler.onChange){
+            axios.post('http://localhost:5000/register',body)
+            .then(response=>console.log("서버 전송 완료"))
+        }
+    },[])
+
+
     return(
         <Formik initialValues={{name: "", email: "", password: "", Confirmpassword: ""}}
                 validationSchema={Yup.object().shape({
@@ -113,22 +163,22 @@ function Register(){
                 <Form>
                     <div><h2>이름</h2></div>
                     <Form.Item required label="Name">
-                        <Input id = "name" placeholder="Enter your name" type= "email" />
+                        <Input id = "name" placeholder="Enter your name" type= "email" onChange={onNameHandler} />
                     </Form.Item>
                     <div><h2>아이디(이메일)</h2></div>
                     <Form.Item required label="Email">
-                        <Input id="email" placeholder="Enter your Email" type="email" />
+                        <Input id="email" placeholder="Enter your Email" type="email" onChange={onEmailHandler} />
                     </Form.Item>
                     <div><h2>비밀번호</h2></div>
                     <Form.Item required label = "Password">
-                        <Input id="Password" placeholder="Enter your Password" type="Password" />
+                        <Input id="Password" placeholder="Enter your Password" type="Password" onChange={onPasswordHandler} />
                     </Form.Item>
                     <div><h2>비밀번호 확인</h2></div>
                     <Form.Item required label ="Password">
-                        <Input id="Password" placeholder="Confirm your Password" type="Password" />
+                        <Input id="Password" placeholder="Confirm your Password" type="Password" onChange={onConfirmPasswordHandler} />
                     </Form.Item>
 
-                    <Button>회원가입하기</Button>
+                    <Button onChange={onSubmitHandler}>회원가입하기</Button>
                 </Form>
 
 
