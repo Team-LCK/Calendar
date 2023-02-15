@@ -4,6 +4,11 @@ import Header from "./Header";
 import Calendar from "./Calendar";
 import './style/RCA.css';
 
+function moving(){
+    window.location.href="/list";
+}
+
+
 function App() {
 
     
@@ -55,7 +60,8 @@ function App() {
 
 
     return (
-        <div className="test-layout">
+        <table>
+        <td><div className="test-layout">
             <div className="RCA-app-container">
                 <Header calendarYM={calendarYM.format("YYYY년 MM월")}
                         today={today.format("현재 YYYY - MM - DD")}
@@ -66,7 +72,10 @@ function App() {
                           changeSelected={changeSelected}
                 />
             </div>
-        </div>
+            
+         </div></td>
+         <td><button onClick={moving}>일정추가</button></td>
+         </table>
     );
 }
 

@@ -74,6 +74,10 @@ import axios from 'axios';
 };
 */
 
+function moving(){
+    window.location.href="/register";
+}
+
 function Event(){
 
     const [email, setEmail] = useState("")
@@ -93,7 +97,8 @@ function Event(){
             email,
             password
         }).then(console.log("서버 전송 완료"))
-    
+        
+        window.location.href="/Calendar";
     }
     
     
@@ -125,6 +130,7 @@ function Event(){
 
              <Button onClick={onSubmitHandler}>Submit</Button>
              <Button>아이디/PW찾기</Button>
+             <Button onClick={moving}>회원가입</Button>
         </Form>
 
 

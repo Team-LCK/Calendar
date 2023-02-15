@@ -116,7 +116,7 @@ function Register(){
             email,
             password
         }).then(console.log("서버 전송 완료"))
-
+        .then(window.location.href="/login");
     }
 
 
