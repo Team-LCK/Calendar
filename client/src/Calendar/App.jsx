@@ -4,6 +4,10 @@ import Header from "./Header";
 import Calendar from "./Calendar";
 import './style/RCA.css';
 
+function mapping(){
+    window.location.href="/map";
+}
+
 function moving(){
     window.location.href="/list";
 }
@@ -103,6 +107,7 @@ function App() {
             <tr><input type="text" value={jsondate()} /></tr>
             <tr><input type="text" value={jsoncon()} /></tr>
             </table>
+            <div><button onClick={mapping}>지도</button></div>
         </div>
         </div>
     );
