@@ -8,6 +8,25 @@ function moving(){
     window.location.href="/list";
 }
 
+function jsontitle(){
+    let json = JSON.parse(localStorage.getItem("data"));
+    let tit = json.title;
+
+    return tit;
+}
+function jsondate(){
+    let json = JSON.parse(localStorage.getItem("data"));
+    let dat = json.date;
+
+    return dat;
+}
+
+function jsoncon(){
+    let json = JSON.parse(localStorage.getItem("data"));
+    let con = json.context;
+
+    return con;
+}
 
 function App() {
 
@@ -60,6 +79,7 @@ function App() {
 
 
     return (
+        <div>
         <table>
         <td><div className="test-layout">
             <div className="RCA-app-container">
@@ -76,6 +96,15 @@ function App() {
          </div></td>
          <td><button onClick={moving}>일정추가</button></td>
          </table>
+         <div>
+            <div><h5 align="left">최근에 등록한 일정</h5></div>
+            <table>
+            <tr><input type="text" value={jsontitle()} /></tr>
+            <tr><input type="text" value={jsondate()} /></tr>
+            <tr><input type="text" value={jsoncon()} /></tr>
+            </table>
+        </div>
+        </div>
     );
 }
 
