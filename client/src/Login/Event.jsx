@@ -1,7 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState , useEffect} from 'react';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {Form, Input, Button} from "antd";
+import axios from 'axios';
 /*const Event = () =>{
     const [form, setForm] = useState({
         username : '',
@@ -73,7 +74,36 @@ import {Form, Input, Button} from "antd";
 };
 */
 
+function moving(){
+    window.location.href="/register";
+}
+
 function Event(){
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const onEmailHandler = (event) => {
+        setEmail(event.currentTarget.value)
+    }
+    
+    const onPasswordHandler = (event) => {
+        setPassword(event.currentTarget.value)
+    }
+
+
+    const onSubmitHandler = (event) => {
+        axios.post("http://localhost:5000/login",{
+            email,
+            password
+        }).then(console.log("서버 전송 완료"))
+        
+        window.location.href="/Calendar";
+    }
+    
+    
+    
+
     return(
 
         <Formik 
@@ -91,15 +121,16 @@ function Event(){
         <Form>
             <div><h2>아이디(이메일)</h2></div>
             <Form.Item required label="Email">
-                <Input id="email" placeholder="Enter your Email" type="email"/>
+                <Input id="email" placeholder="Enter your Email" type="email" onChange={onEmailHandler}/>
              </Form.Item>
              <div><h2>비밀번호</h2></div>
              <Form.Item required label="Password">
-                <Input id="Password" placeholder="Enter your Password" type="Password" />
+                <Input id="Password" placeholder="Enter your Password" type="Password" onChange={onPasswordHandler} />
              </Form.Item>
 
-             <Button>Submit</Button>
+             <Button onClick={onSubmitHandler}>Submit</Button>
              <Button>아이디/PW찾기</Button>
+             <Button onClick={moving}>회원가입</Button>
         </Form>
 
 

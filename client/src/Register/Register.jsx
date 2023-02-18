@@ -1,8 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import {Form, Input, Button} from "antd";
-
+import axios from 'axios';
 /*const Register =() => {
     
     const [form, setForm] = useState({
@@ -93,8 +93,36 @@ import {Form, Input, Button} from "antd";
 */
 
 function Register(){
+
+    const [name, setName] = useState("")
+    const [email, setEmail] =useState("")
+    const [password, setPassword] = useState("")
+
+    const onNameHandler = (event) => {
+        setName(event.currentTarget.value)
+    }
+
+    const onEmailHandler = (event) => {
+       setEmail(event.currentTarget.value)
+    }
+
+    const onPasswordHandler = (event) => {
+        setPassword(event.currentTarget.value)
+    }
+
+    const onSubmit = (event) => {
+        axios.post("http://localhost:5000/register",{
+            name,
+            email,
+            password
+        }).then(console.log("서버 전송 완료"))
+        .then(window.location.href="/login");
+    }
+
+
+
     return(
-        <Formik initialValues={{name: "", email: "", password: "", Confirmpassword: ""}}
+        <Formik initialValues={{name: "", email: "", password: ""}}
                 validationSchema={Yup.object().shape({
                     name: Yup.string()
                     .required("Name is required"),
@@ -104,31 +132,24 @@ function Register(){
                     password: Yup.string()
                     .min(6, "Password must be at least 6 characters")
                     .required("Password is required"),
-                    Confirmpassword: Yup.string()
-                    .oneOf([Yup.ref("password"), null], "Passwords must match")
-                    .required("Confirm Password is required"),
                 })}
                 >
                 
                 <Form>
                     <div><h2>이름</h2></div>
                     <Form.Item required label="Name">
-                        <Input id = "name" placeholder="Enter your name" type= "email" />
+                        <Input id = "name" placeholder="Enter your name" type= "email" onChange={onNameHandler} />
                     </Form.Item>
                     <div><h2>아이디(이메일)</h2></div>
                     <Form.Item required label="Email">
-                        <Input id="email" placeholder="Enter your Email" type="email" />
+                        <Input id="email" placeholder="Enter your Email" type="email" onChange={onEmailHandler} />
                     </Form.Item>
                     <div><h2>비밀번호</h2></div>
                     <Form.Item required label = "Password">
-                        <Input id="Password" placeholder="Enter your Password" type="Password" />
-                    </Form.Item>
-                    <div><h2>비밀번호 확인</h2></div>
-                    <Form.Item required label ="Password">
-                        <Input id="Password" placeholder="Confirm your Password" type="Password" />
+                        <Input id="Password" placeholder="Enter your Password" type="Password" onChange={onPasswordHandler} />
                     </Form.Item>
 
-                    <Button>회원가입하기</Button>
+                    <Button onClick={onSubmit}>회원가입하기</Button>
                 </Form>
 
 

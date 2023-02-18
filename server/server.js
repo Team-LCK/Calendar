@@ -9,7 +9,8 @@ const {auth}=require('./middleware/auth');
 const {User} =require('./User');
 const cors=require("cors");
 const config=require('./config/key');
-const cors_origin=["http://localhost:3000"];
+const cors_origin=["http://localhost:5173"];
+
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -25,7 +26,7 @@ mongoose.connect(config.mongoURI)
 .then(()=>console.log("MongoDB connected"))
 .catch(err=>console.log(err));
 
-app.post('/api/users/register',(req,res)=>{
+app.post('/register',(req,res)=>{
   const user=new User(req.body);
   user.save((err,doc)=>{
     if(err) return res.json({success:false,err});
@@ -35,7 +36,7 @@ app.post('/api/users/register',(req,res)=>{
   })
 })
 
-app.post('/api/users/login',(req,res)=>{
+app.post('/login',(req,res)=>{
 
   User.findOne({
     email:req.body.email,
@@ -102,3 +103,4 @@ app.get('/api/hello',(req,res)=>{
 app.listen(port, function () {
   console.log(`listening on port ${port}`);
 }); 
+
