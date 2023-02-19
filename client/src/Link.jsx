@@ -10,10 +10,14 @@ import Register from "./Register/Register";
 import App from "./Calendar/App";
 import List from "./List/List";
 import Maps from "./Maps/Maps";
+import Navbar from "./Navbar/Navbar";
+import Footer from "./Footer/Footer";
 function Link(){
     return(
         <Router>
             <Suspense fallback={<div>Loading...</div>}>
+                <Navbar />
+                <div style={{paddingTop:"169px"}}></div>
                <div>
                     <Routes>
                         <Route path ="/" element={<Login />} />
@@ -24,6 +28,7 @@ function Link(){
                         <Route path ="/map" element ={<Maps />} />
                     </Routes>
                 </div> 
+                <Footer />
             </Suspense>
         </Router>
     )
