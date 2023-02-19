@@ -96,7 +96,7 @@ function Event(){
         axios.post("http://localhost:5000/login",{
             email,
             password
-        }).then(console.log("서버 전송 완료"))
+        }).then(res => console.log(res));
         
         window.location.href="/Calendar";
     }
