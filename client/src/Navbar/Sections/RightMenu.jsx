@@ -1,46 +1,29 @@
 import React from "react";
 import {Menu} from "antd";
-import axios from "axios";
-import { USER_SERVER } from "../../Config";
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useRecoilState} from "recoil";
+import {loginSuccess} from "../../atom";
 
 function RightMenu(props){
 
-    const user = useSelector((state) => state.user);
-    const navigate = useNavigate();
+    const [login, setLogin] = useRecoilState(loginSuccess);
 
     const logoutHandler = () => {
-        axios.get(`${USER_SERVER}/logout`).then((response)=>{
-            if(response.status === 200){
-                navigate("/login");
-            } else{
-                alert("Log Out Failed");
-            }
-        })
+        setLogin(false);
+        window.location.href = '/';
     }
-    if(user.loginSuccess === true)
-    {
-        return(
-            <Menu style={{display:'flex', justifyContent:'flex-end'}}>
-                <Menu.Item key ="logout">
-                    <a onClick={logoutHandler}>로그아웃</a>
-                </Menu.Item>
-            </Menu>
-        )
 
-    } else{
-        return(
-            <Menu style={{display:'flex', justifyContent:'flex-end'}}>
-                <Menu.Item key="login">
-                    <a href = "/login">로그인</a>
+    return(
+        <Menu style={{display: 'flex', justifyContent: 'flex-end'}}>
+            {!login ? <><Menu.Item key = "login">
+                <a href="/login">로그인</a>
                 </Menu.Item>
-                <Menu.Item key="register">
-                    <a href = "/register">회원가입</a>
-                </Menu.Item>
-            </Menu>
-        )
-    }
+                <Menu.Item key = "register">
+                <a href="/register">회원가입</a>    
+                </Menu.Item></> : <Menu.Item key = "login">
+                <a href="/login" onClick={logoutHandler}>로그아웃</a>    
+                </Menu.Item>}
+        </Menu>
+    )
     
 }
 

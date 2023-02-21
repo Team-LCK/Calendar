@@ -1,0 +1,10 @@
+#pagination a{
+    float: left;
+    padding: 10px;
+    font-size: 20px;
+    margin-left: 50px;
+}
+
+#pagination{
+    margin-bottom : 2rem;
+}

@@ -6,8 +6,8 @@ function Footer(){
         <div>
             <table>
                 <td> <h3>Developers &nbsp;</h3> </td>
-                <td> <h5>frontend:&nbsp; LeeDongwook &nbsp; ChoiInyoung &nbsp;</h5></td>
-                <td> <h5>backend: &nbsp; KimHyeonmin</h5></td>
+                <td> <h5>Frontend:&nbsp; Lee&nbsp;Dongwook &nbsp; Choi&nbsp;Inyoung &nbsp;</h5></td>
+                <td> <h5>Backend: &nbsp; Kim&nbsp;Hyeonmin</h5></td>
             </table>
         </div>
     )
