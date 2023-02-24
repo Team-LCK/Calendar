@@ -3,6 +3,9 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {Form, Input, Button} from "antd";
 import axios from 'axios';
+import {useRecoilState} from 'recoil';
+import {loginSuccess} from '../atom';
+
 /*const Event = () =>{
     const [form, setForm] = useState({
         username : '',
@@ -82,6 +85,7 @@ function Event(){
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [login, setLogin] = useRecoilState(loginSuccess);
 
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value)
@@ -96,10 +100,18 @@ function Event(){
         axios.post("http://localhost:5000/login",{
             email,
             password
-        }).then(console.log("서버 전송 완료"))
+        }).then(res => {
+            if(res.data.loginSuccess === true){
+            setLogin(prev => !prev);
+            window.location.href="/Calendar";
+        }
+        else
+            alert(res.data.message);
+        });
         
-        window.location.href="/Calendar";
-    }
+   }
+
+   
     
     
     

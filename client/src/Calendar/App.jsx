@@ -3,33 +3,28 @@ import moment from 'moment';
 import Header from "./Header";
 import Calendar from "./Calendar";
 import './style/RCA.css';
-
+import {Button} from 'antd';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 function mapping(){
     window.location.href="/map";
 }
 
-function moving(){
-    window.location.href="/list";
-}
-
 function jsontitle(){
-    let json = JSON.parse(localStorage.getItem("data"));
-    let tit = json.title;
-
-    return tit;
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.title;
+    return txt;
 }
+
 function jsondate(){
-    let json = JSON.parse(localStorage.getItem("data"));
-    let dat = json.date;
-
-    return dat;
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt =json.date;
+    return txt;
 }
 
-function jsoncon(){
-    let json = JSON.parse(localStorage.getItem("data"));
-    let con = json.context;
-
-    return con;
+function jsontext(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.text;
+    return txt;
 }
 
 function App() {
@@ -80,8 +75,7 @@ function App() {
         }
 
     }
-
-
+    
     return (
         <div>
         <table>
@@ -98,16 +92,19 @@ function App() {
             </div>
             
          </div></td>
-         <td><button onClick={moving}>일정추가</button></td>
          </table>
          <div>
-            <div><h5 align="left">최근에 등록한 일정</h5></div>
+            <Button onClick={mapping}>장소를 모르겠다면? </Button>
+        </div>
+        <div>
             <table>
-            <tr><input type="text" value={jsontitle()} /></tr>
-            <tr><input type="text" value={jsondate()} /></tr>
-            <tr><input type="text" value={jsoncon()} /></tr>
+                <td><h4>최근 추가한 일정: &nbsp; &nbsp; </h4></td>
+                <td><h5>제목: {jsontitle()}</h5></td>
+                <td>&nbsp;</td>
+                <td><h5>날짜: {jsondate()}</h5></td>
+                <td>&nbsp;</td>
+                <td><h5>내용: {jsontext()}</h5></td>
             </table>
-            <div><button onClick={mapping}>지도</button></div>
         </div>
         </div>
     );

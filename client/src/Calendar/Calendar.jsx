@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 function DateHeader(props) {
 
@@ -89,15 +90,16 @@ function Week(props) {
 
             if (moment(dayInfo.yearMonthDayFormat).isSame(selectedDayFormat, 'day')) {
                 className = "selected"
+                
             }
 
             return (
-                <div className={"RCA-calendar-day " + className} key={`RCA-${dayInfo.weekIndex}-${i}-day`}
+                <Link to ="todolist" state={{day:dayInfo.getDay}} className={"RCA-calendar-day " + className} key={`RCA-${dayInfo.weekIndex}-${i}-day`}
                      onClick={() => fn(dayInfo.yearMonthDayFormat)}>
                     <label className="RCA-calendar-day-label">
                         {dayInfo.getDay}
                     </label>
-                </div>
+                </Link>
             )
         })
     }
