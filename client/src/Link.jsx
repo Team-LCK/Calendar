@@ -11,6 +11,8 @@ import App from "./Calendar/App";
 import Maps from "./Maps/Maps";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
+import TodoList from "./TodoList/TodoList";
+
 function Link(){
     return(
         <Router>
@@ -24,6 +26,7 @@ function Link(){
                         <Route path ="/register" element={<Register />} />
                         <Route path ="/Calendar" element={<App />} />
                         <Route path ="/map" element ={<Maps />} />
+                        <Route path = "/Calendar/:id" element ={<TodoList/>} />
                     </Routes>
                 </div> 
                 <Footer />
