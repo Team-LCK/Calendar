@@ -3,6 +3,8 @@ import moment from 'moment';
 import Header from "./Header";
 import Calendar from "./Calendar";
 import './style/RCA.css';
+import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 function mapping(){
     window.location.href="/map";
@@ -12,25 +14,25 @@ function moving(){
     window.location.href="/list";
 }
 
-function jsontitle(){
-    let json = JSON.parse(localStorage.getItem("data"));
-    let tit = json.title;
+// function jsontitle(){
+//     let json = JSON.parse(localStorage.getItem("data"));
+//     let tit = json.title;
 
-    return tit;
-}
-function jsondate(){
-    let json = JSON.parse(localStorage.getItem("data"));
-    let dat = json.date;
+//     return tit;
+// }
+// function jsondate(){
+//     let json = JSON.parse(localStorage.getItem("data"));
+//     let dat = json.date;
 
-    return dat;
-}
+//     return dat;
+// }
 
-function jsoncon(){
-    let json = JSON.parse(localStorage.getItem("data"));
-    let con = json.context;
+// function jsoncon(){
+//     let json = JSON.parse(localStorage.getItem("data"));
+//     let con = json.context;
 
-    return con;
-}
+//     return con;
+// }
 
 function App() {
 
@@ -38,7 +40,6 @@ function App() {
     const [calendarYM, setCalendarYm] = useState(moment());
     const [today, setToday] = useState(moment());
     const [selected, setSelected] = useState(moment().format("YYYY-MM-DD"));
-
     const moveMonth = (month) => {
 
         /**
@@ -94,19 +95,19 @@ function App() {
                 <Calendar YM={calendarYM.format("YYYY-MM-DD")}
                           selected={selected}
                           changeSelected={changeSelected}
+                          calendarYM={calendarYM.format("YYYY년 MM월")}
                 />
             </div>
             
          </div></td>
-         <td><button onClick={moving}>일정추가</button></td>
          </table>
          <div>
             <div><h5 align="left">최근에 등록한 일정</h5></div>
-            <table>
+            {/* <table>
             <tr><input type="text" value={jsontitle()} /></tr>
             <tr><input type="text" value={jsondate()} /></tr>
             <tr><input type="text" value={jsoncon()} /></tr>
-            </table>
+            </table> */}
             <div><button onClick={mapping}>지도</button></div>
         </div>
         </div>

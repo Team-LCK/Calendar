@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import moment from "moment";
+import { Link } from 'react-router-dom';
 
 function DateHeader(props) {
 
@@ -53,7 +54,7 @@ function DateHeader(props) {
 
 function Week(props) {
 
-    const {firstDayOfThisWeekformat, weekIndex, ymOfThisCalendar, selected, fn} = props;
+    const {firstDayOfThisWeekformat, weekIndex, ymOfThisCalendar, selected, fn,YM} = props;
     const Days = (firstDayFormat, weekIndex) => {
         const _days = [];
 
@@ -92,12 +93,13 @@ function Week(props) {
             }
 
             return (
-                <div className={"RCA-calendar-day " + className} key={`RCA-${dayInfo.weekIndex}-${i}-day`}
+                <Link to="todolist" state={{YM,day:dayInfo.getDay}} className={"RCA-calendar-day " + className} key={`RCA-${dayInfo.weekIndex}-${i}-day`}
                      onClick={() => fn(dayInfo.yearMonthDayFormat)}>
                     <label className="RCA-calendar-day-label">
                         {dayInfo.getDay}
                     </label>
-                </div>
+                </Link>
+
             )
         })
     }
@@ -116,7 +118,7 @@ function Week(props) {
 
 function Calendar(props) {
 
-    const {YM, selected, changeSelected} = props
+    const {YM, selected, changeSelected,calendarYM} = props
 
     const Weeks = (monthYear, selected, clickFn) => {
         const firstDayOfMonth = moment(monthYear).startOf('month');
@@ -134,6 +136,7 @@ function Calendar(props) {
                       firstDayOfThisWeekformat={firstDayOfWeek.clone().add(i * 7, 'd').format("YYYY-MM-DD")}
                       selected={selected}
                       fn={clickFn}
+                      YM={calendarYM}
                 />
             ))
         }
