@@ -15,9 +15,21 @@ function jsontitle(){
     return txt;
 }
 
-function jsondate(){
+function jsonyear(){
     let json = JSON.parse(localStorage.getItem("dataToSubmit"));
-    let txt =json.date;
+    let txt = json.year;
+    return txt;
+}
+
+function jsonmonth(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.month;
+    return txt;
+}
+
+function jsonday(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.day;
     return txt;
 }
 
@@ -88,6 +100,7 @@ function App() {
                 <Calendar YM={calendarYM.format("YYYY-MM-DD")}
                           selected={selected}
                           changeSelected={changeSelected}
+                          calendarYM = {calendarYM.format("YYYY년 MM월")}
                 />
             </div>
             
@@ -101,7 +114,7 @@ function App() {
                 <td><h4>최근 추가한 일정: &nbsp; &nbsp; </h4></td>
                 <td><h5>제목: {jsontitle()}</h5></td>
                 <td>&nbsp;</td>
-                <td><h5>날짜: {jsondate()}</h5></td>
+                <td><h5>날짜: {jsonyear()}년 {jsonmonth()}월 {jsonday()}일 </h5></td>
                 <td>&nbsp;</td>
                 <td><h5>내용: {jsontext()}</h5></td>
             </table>

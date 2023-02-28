@@ -7,6 +7,7 @@ const bodyParser=require('body-parser');
 const cookieParser=require('cookie-parser');
 const {auth}=require('./middleware/auth');
 const {User} =require('./User');
+const {Todo} = require('./Todolist');
 const cors=require("cors");
 const config=require('./config/key');
 const cors_origin=["http://localhost:5173"];
@@ -95,6 +96,18 @@ app.get('/api/users/logout',auth,(req,res)=>{
     })
   })
 })
+
+app.post('/Todolist', (req,res)=>{
+  const todo = new Todo(req.body);
+  todo.save((err,doc)=>{
+    if(err) return res.json({success:false,err});
+    return res.status(200).json({
+      success:true
+      })  
+   })
+})
+
+
 
 app.get('/api/hello',(req,res)=>{
   res.send("hello");
