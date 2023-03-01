@@ -17,7 +17,6 @@ import TodoList from "./TodoList/TodoList";
 
 function Link(){
     return(
-        <CookiesProvider>
             <Router>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Navbar />
@@ -35,7 +34,6 @@ function Link(){
                     <Footer />
                 </Suspense>
             </Router>
-         </CookiesProvider>
     )
 }
 
