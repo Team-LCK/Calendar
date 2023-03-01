@@ -5,6 +5,7 @@ import Calendar from "./Calendar";
 import './style/RCA.css';
 import {Button} from 'antd';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 function mapping(){
     window.location.href="/map";
 }
@@ -47,6 +48,7 @@ function App() {
     const [selected, setSelected] = useState(moment().format("YYYY-MM-DD"));
 
     useEffect(()=>{
+        console.log();
         if(localStorage.getItem("dataToSubmit")){
             setHasTodo(prev=>!prev);
         }

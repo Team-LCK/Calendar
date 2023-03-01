@@ -8,8 +8,7 @@ function movetoCalendar(){
 
 function TodoList(){
 
-    const [list, setList] = useState([]);
-
+    const [allTodo,setAllTodo]=useState([]);
     const [title, setTitle] = useState("");
     const [text, setText] =useState("");
     const {state} = useLocation();
@@ -20,6 +19,11 @@ function TodoList(){
     const year = result[0].substring(0,4);
     const month = result[1].substring(1,2);
     const day = state.day;
+
+    useEffect(()=>{
+        axios.get("http://localhost:5000/api/users/auth")
+        .then(res=>console.log(res));
+    },[])
 
     const onTitleHandler = (event) => {
         setTitle(event.target.value);
@@ -41,22 +45,15 @@ function TodoList(){
             day: day
         }
 
-        setList(prev => {
-            return 
-                [...prev, dataToSubmit]
-            
+        setAllTodo(prev=>{
+            return [
+                ...prev,
+                dataToSubmit
+            ]
         })
         
-        axios.post("http://localhost:5000/Todolist",{
-            title,
-            text,
-            year,
-            month,
-            day
-        })
-        .then(res => console.log(res))
-
-        localStorage.setItem("dataToSubmit",JSON.stringify(dataToSubmit));
+        axios.post("http://localhost:5000/Todolist",dataToSubmit)
+        .then(res => console.log(res));
     }
 
    return(
