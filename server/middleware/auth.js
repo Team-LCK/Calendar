@@ -2,7 +2,7 @@ const {User}=require('../User');
 
 const auth=(req,res,next)=>{
 
-    const token=req.cookies.x_auth
+    const token=req.query.cookie;
 
     User.findByToken(token,(err,user)=>{
         if(err) throw err;
