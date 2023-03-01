@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import moment from "moment";
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom";
 
 function DateHeader(props) {
 
@@ -54,7 +54,7 @@ function DateHeader(props) {
 
 function Week(props) {
 
-    const {firstDayOfThisWeekformat, weekIndex, ymOfThisCalendar, selected, fn,YM} = props;
+    const {firstDayOfThisWeekformat, weekIndex, ymOfThisCalendar, selected, fn, YM} = props;
     const Days = (firstDayFormat, weekIndex) => {
         const _days = [];
 
@@ -90,16 +90,16 @@ function Week(props) {
 
             if (moment(dayInfo.yearMonthDayFormat).isSame(selectedDayFormat, 'day')) {
                 className = "selected"
+                
             }
 
             return (
-                <Link to="todolist" state={{YM,day:dayInfo.getDay}} className={"RCA-calendar-day " + className} key={`RCA-${dayInfo.weekIndex}-${i}-day`}
+                <Link to ="todolist" state={{YM, day:dayInfo.getDay}} className={"RCA-calendar-day " + className} key={`RCA-${dayInfo.weekIndex}-${i}-day`}
                      onClick={() => fn(dayInfo.yearMonthDayFormat)}>
                     <label className="RCA-calendar-day-label">
                         {dayInfo.getDay}
                     </label>
                 </Link>
-
             )
         })
     }
@@ -118,7 +118,7 @@ function Week(props) {
 
 function Calendar(props) {
 
-    const {YM, selected, changeSelected,calendarYM} = props
+    const {YM, selected, changeSelected, calendarYM} = props
 
     const Weeks = (monthYear, selected, clickFn) => {
         const firstDayOfMonth = moment(monthYear).startOf('month');

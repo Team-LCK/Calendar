@@ -12,9 +12,12 @@ import Maps from "./Maps/Maps";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import { RecoilRoot } from "recoil";
-import TodoList from "./todos/TodoList";
+import TodoList from "./TodoList/TodoList";
+import { CookiesProvider } from 'react-cookie';
+
 function Link(){
     return(
+        <CookiesProvider>
             <Router>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Navbar />
@@ -26,12 +29,13 @@ function Link(){
                             <Route path ="/register" element={<Register />} />
                             <Route path ="/Calendar" element={<App />} />
                             <Route path ="/map" element ={<Maps />} />
-                            <Route path ="/Calendar/:id" element ={<TodoList />} />
+                            <Route path ="/Calendar/todolist" element ={<TodoList />} />
                         </Routes>
                     </div> 
                     <Footer />
                 </Suspense>
             </Router>
+         </CookiesProvider>
     )
 }
 

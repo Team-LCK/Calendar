@@ -10,11 +10,12 @@ const {User} =require('./User');
 const cors=require("cors");
 const config=require('./config/key');
 const cors_origin=["http://localhost:5173"];
+const {Todo} = require('./Todolist');
 
-
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(cookieParser());
+
 app.use(
   cors({
     origin:cors_origin,
@@ -63,14 +64,13 @@ app.post('/login',(req,res)=>{
           .status(200)
           .json({
             loginSuccess:true,
-            userId:user._id
+            userId:user._id,
+            token:user.token
           })
-
         })
     })
 
   })
-
 })
 
 app.get('/api/users/auth',auth,(req,res)=>{
@@ -82,7 +82,7 @@ app.get('/api/users/auth',auth,(req,res)=>{
   })
 })
 
-app.get('/api/users/logout',auth,(req,res)=>{
+app.get('/logout',auth,(req,res)=>{
   User.findOneAndUpdate({
     _id:req.user._id,
   },{token:""},(err,user)=>{
@@ -96,8 +96,8 @@ app.get('/api/users/logout',auth,(req,res)=>{
   })
 })
 
-app.get('/api/hello',(req,res)=>{
-  res.send("hello");
+app.post('/Todolist',auth,(req,res)=>{
+ 
 })
 
 app.listen(port, function () {

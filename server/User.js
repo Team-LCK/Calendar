@@ -54,7 +54,6 @@ userSchema.methods.comparePassword=function(plainPassword,cb){
 userSchema.methods.generateToken=function(cb){
     const user=this;
     const token=jwt.sign(user._id.toHexString(),'secretToken');
-
     user.token=token;
     user.save(function(err,user){
         if(err) return cb(err);
@@ -64,7 +63,6 @@ userSchema.methods.generateToken=function(cb){
 
 userSchema.statics.findByToken=function(token,cb){
     const user=this;
-
     jwt.verify(token,'secretToken',function(err,decoded){
         user.findOne({
             "_id":decoded,

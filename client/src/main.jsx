@@ -7,9 +7,9 @@ import Link from './Link';
 import {RecoilRoot} from "recoil";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RecoilRoot>
       <Link />
     </RecoilRoot>
-  </React.StrictMode>
+  /* </React.StrictMode> */
 )

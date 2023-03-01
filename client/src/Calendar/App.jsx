@@ -3,43 +3,57 @@ import moment from 'moment';
 import Header from "./Header";
 import Calendar from "./Calendar";
 import './style/RCA.css';
-import { Button } from 'antd';
-import { Link } from 'react-router-dom';
-
+import {Button} from 'antd';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 function mapping(){
     window.location.href="/map";
 }
 
-function moving(){
-    window.location.href="/list";
+function jsontitle(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.title;
+    return txt;
 }
 
-// function jsontitle(){
-//     let json = JSON.parse(localStorage.getItem("data"));
-//     let tit = json.title;
+function jsonyear(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.year;
+    return txt;
+}
 
-//     return tit;
-// }
-// function jsondate(){
-//     let json = JSON.parse(localStorage.getItem("data"));
-//     let dat = json.date;
+function jsonmonth(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.month;
+    return txt;
+}
 
-//     return dat;
-// }
+function jsonday(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.day;
+    return txt;
+}
 
-// function jsoncon(){
-//     let json = JSON.parse(localStorage.getItem("data"));
-//     let con = json.context;
-
-//     return con;
-// }
+function jsontext(){
+    let json = JSON.parse(localStorage.getItem("dataToSubmit"));
+    let txt = json.text;
+    return txt;
+}
 
 function App() {
 
-    
+    const [hasTodo,setHasTodo]=useState(false);
     const [calendarYM, setCalendarYm] = useState(moment());
     const [today, setToday] = useState(moment());
     const [selected, setSelected] = useState(moment().format("YYYY-MM-DD"));
+
+    useEffect(()=>{
+        console.log();
+        if(localStorage.getItem("dataToSubmit")){
+            setHasTodo(prev=>!prev);
+        }
+    },[])
+
     const moveMonth = (month) => {
 
         /**
@@ -81,8 +95,7 @@ function App() {
         }
 
     }
-
-
+    
     return (
         <div>
         <table>
@@ -95,21 +108,25 @@ function App() {
                 <Calendar YM={calendarYM.format("YYYY-MM-DD")}
                           selected={selected}
                           changeSelected={changeSelected}
-                          calendarYM={calendarYM.format("YYYY년 MM월")}
+                          calendarYM = {calendarYM.format("YYYY년 MM월")}
                 />
             </div>
             
          </div></td>
          </table>
          <div>
-            <div><h5 align="left">최근에 등록한 일정</h5></div>
-            {/* <table>
-            <tr><input type="text" value={jsontitle()} /></tr>
-            <tr><input type="text" value={jsondate()} /></tr>
-            <tr><input type="text" value={jsoncon()} /></tr>
-            </table> */}
-            <div><button onClick={mapping}>지도</button></div>
+            <Button onClick={mapping}>장소를 모르겠다면? </Button>
         </div>
+        {hasTodo ? <div>
+            <table>
+                <td><h4>최근 추가한 일정: &nbsp; &nbsp; </h4></td>
+                <td><h5>제목: {jsontitle()}</h5></td>
+                <td>&nbsp;</td>
+                <td><h5>날짜: {jsonyear()}년 {jsonmonth()}월 {jsonday()}일 </h5></td>
+                <td>&nbsp;</td>
+                <td><h5>내용: {jsontext()}</h5></td>
+            </table>
+        </div> : null}
         </div>
     );
 }
