@@ -8,6 +8,8 @@ function movetoCalendar(){
 
 function TodoList(){
 
+    const [list, setList] = useState([]);
+
     const [title, setTitle] = useState("");
     const [text, setText] =useState("");
     const {state} = useLocation();
@@ -38,6 +40,12 @@ function TodoList(){
             month: month,
             day: day
         }
+
+        setList(prev => {
+            return 
+                [...prev, dataToSubmit]
+            
+        })
         
         axios.post("http://localhost:5000/Todolist",{
             title,

@@ -41,10 +41,16 @@ function jsontext(){
 
 function App() {
 
-    
+    const [hasTodo,setHasTodo]=useState(false);
     const [calendarYM, setCalendarYm] = useState(moment());
     const [today, setToday] = useState(moment());
     const [selected, setSelected] = useState(moment().format("YYYY-MM-DD"));
+
+    useEffect(()=>{
+        if(localStorage.getItem("dataToSubmit")){
+            setHasTodo(prev=>!prev);
+        }
+    },[])
 
     const moveMonth = (month) => {
 
@@ -109,7 +115,7 @@ function App() {
          <div>
             <Button onClick={mapping}>장소를 모르겠다면? </Button>
         </div>
-        <div>
+        {hasTodo ? <div>
             <table>
                 <td><h4>최근 추가한 일정: &nbsp; &nbsp; </h4></td>
                 <td><h5>제목: {jsontitle()}</h5></td>
@@ -118,7 +124,7 @@ function App() {
                 <td>&nbsp;</td>
                 <td><h5>내용: {jsontext()}</h5></td>
             </table>
-        </div>
+        </div> : null}
         </div>
     );
 }

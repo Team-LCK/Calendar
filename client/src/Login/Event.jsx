@@ -103,7 +103,7 @@ function Event(){
         }).then(res => {
             if(res.data.loginSuccess === true){
             setLogin(prev => !prev);
-            window.location.href="/Calendar";
+            window.location.href="/login/Calendar";
         }
         else
             alert(res.data.message);
