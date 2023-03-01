@@ -11,27 +11,31 @@ import App from "./Calendar/App";
 import Maps from "./Maps/Maps";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
+import { RecoilRoot } from "recoil";
 import TodoList from "./TodoList/TodoList";
+
 
 function Link(){
     return(
-        <Router>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Navbar />
-                <div style={{paddingTop:"169px"}}></div>
-               <div>
-                    <Routes>
-                        <Route path ="/" element={<Login />} />
-                        <Route path ="/login" element={<Login />} />
-                        <Route path ="/register" element={<Register />} />
-                        <Route path ="/Calendar" element={<App />} />
-                        <Route path ="/map" element ={<Maps />} />
-                        <Route path = "/Calendar/:id" element ={<TodoList/>} />
-                    </Routes>
-                </div> 
-                <Footer />
-            </Suspense>
-        </Router>
+        <CookiesProvider>
+            <Router>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Navbar />
+                    <div style={{paddingTop:"169px"}}></div>
+                <div>
+                        <Routes>
+                            <Route path ="/" element={<Login />} />
+                            <Route path ="/login" element={<Login />} />
+                            <Route path ="/register" element={<Register />} />
+                            <Route path ="/Calendar" element={<App />} />
+                            <Route path ="/map" element ={<Maps />} />
+                            <Route path ="/Calendar/todolist" element ={<TodoList />} />
+                        </Routes>
+                    </div> 
+                    <Footer />
+                </Suspense>
+            </Router>
+         </CookiesProvider>
     )
 }
 

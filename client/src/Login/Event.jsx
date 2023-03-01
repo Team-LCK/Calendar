@@ -3,8 +3,8 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {Form, Input, Button} from "antd";
 import axios from 'axios';
-import {useRecoilState} from 'recoil';
-import {loginSuccess} from '../atom';
+import { useRecoilState } from 'recoil';
+import { cookies, loginSuccess } from '../atom';
 
 /*const Event = () =>{
     const [form, setForm] = useState({
@@ -82,10 +82,10 @@ function moving(){
 }
 
 function Event(){
-
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [login, setLogin] = useRecoilState(loginSuccess);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [login,setLogin]=useRecoilState(loginSuccess);
+    const [cookie,setCookie]=useRecoilState(cookies);
 
     const onEmailHandler = (event) => {
         setEmail(event.currentTarget.value)
@@ -100,18 +100,16 @@ function Event(){
         axios.post("http://localhost:5000/login",{
             email,
             password
-        }).then(res => {
-            if(res.data.loginSuccess === true){
-            setLogin(prev => !prev);
-            window.location.href="/Calendar";
-        }
-        else
-            alert(res.data.message);
+        }).then(res=>{
+            if(res.data.loginSuccess===true){
+                setCookie(res.data.token);
+                setLogin(prev=>!prev);
+                window.location.href="/Calendar";
+            }
+            else
+                alert(res.data.message);
         });
-        
-   }
-
-   
+    }
     
     
     

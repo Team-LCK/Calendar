@@ -1,4 +1,6 @@
 import React ,{useState ,useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
+import axios from 'axios';
 
 function movetoCalendar(){
     window.location.href="/Calendar";
@@ -6,17 +8,27 @@ function movetoCalendar(){
 
 function TodoList(){
 
+    const [allTodo,setAllTodo]=useState([]);
     const [title, setTitle] = useState("");
-    const [date, setDate] = useState("");
     const [text, setText] =useState("");
+    const {state} = useLocation();
+
+    const number = state.YM;
+    const result = number.split(" ");
+    
+    const year = result[0].substring(0,4);
+    const month = result[1].substring(1,2);
+    const day = state.day;
+
+    useEffect(()=>{
+        axios.get("http://localhost:5000/api/users/auth")
+        .then(res=>console.log(res));
+    },[])
 
     const onTitleHandler = (event) => {
         setTitle(event.target.value);
     }
 
-    const onDateHandler = (event) => {
-        setDate(event.target.value);
-    }
 
     const onTextHandler = (event) => {
         setText(event.target.value);
@@ -27,19 +39,27 @@ function TodoList(){
 
         const dataToSubmit = {
             title : title,
-            date: date,
-            text: text
+            text: text,
+            year: year,
+            month: month,
+            day: day
         }
 
-        localStorage.setItem("dataToSubmit",JSON.stringify(dataToSubmit));
+        setAllTodo(prev=>{
+            return [
+                ...prev,
+                dataToSubmit
+            ]
+        })
+        
+        axios.post("http://localhost:5000/Todolist",dataToSubmit)
+        .then(res => console.log(res));
     }
 
    return(
     <div>
-        <h5>일정추가</h5>
-        <table>
+        <table style={{marginLeft:"310px", marginTop: "20px"}}>
             <tr><label>제목: </label><input type="text" onChange ={onTitleHandler} placeholder="Enter Title" /></tr>
-            <tr><label>날짜: </label><input type="date" onChange ={onDateHandler} placeholder="Enter Date" /></tr>
             <tr><label>내용: </label><input type="textarea" onChange={onTextHandler} placeholder="Enter Content" /></tr>
             <tr><td><button onClick={onSubmitHandler}>저장하기</button></td><td><button onClick={movetoCalendar}>이동하기</button></td></tr>
         </table>
