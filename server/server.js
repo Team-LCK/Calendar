@@ -8,18 +8,17 @@ const cookieParser=require('cookie-parser');
 const {auth}=require('./middleware/auth');
 const {User} =require('./User');
 const {Todo} = require('./Todolist');
-const cors=require("cors");
 const config=require('./config/key');
-const cors_origin=["http://localhost:5173"];
+const cors = require("cors");
+let cors_origin = [`http://localhost:5173`];
 
-
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(cookieParser());
 app.use(
   cors({
-    origin:cors_origin,
-    credentials:true,
+    origin: cors_origin, // 허락하고자 하는 요청 주소
+    credentials: true, // true로 하면 설정한 내용을 response 헤더에 추가 
   })
 );
 
@@ -27,17 +26,25 @@ mongoose.connect(config.mongoURI)
 .then(()=>console.log("MongoDB connected"))
 .catch(err=>console.log(err));
 
-app.post('/register',(req,res)=>{
+app.post('/api/users/register',async (req,res)=>{
+  const checkUser=await User.findOne({
+    email:req.body.email
+  });
+  if(checkUser){
+    return res.send({
+      success:false,
+      message:"이미 회원가입된 이메일입니다."
+    })
+  }
   const user=new User(req.body);
-  user.save((err,doc)=>{
-    if(err) return res.json({success:false,err});
-    return res.status(200).json({
+  user.save().then(()=>{
+    res.status(200).json({
       success:true
     })
   })
 })
 
-app.post('/login',(req,res)=>{
+app.post('api/users/login',(req,res)=>{
 
   User.findOne({
     email:req.body.email,
@@ -64,14 +71,13 @@ app.post('/login',(req,res)=>{
           .status(200)
           .json({
             loginSuccess:true,
-            userId:user._id
+            userId:user._id,
+            token:user.token
           })
-
         })
     })
 
   })
-
 })
 
 app.get('/api/users/auth',auth,(req,res)=>{
@@ -83,7 +89,7 @@ app.get('/api/users/auth',auth,(req,res)=>{
   })
 })
 
-app.get('/api/users/logout',auth,(req,res)=>{
+app.get('/logout',auth,(req,res)=>{
   User.findOneAndUpdate({
     _id:req.user._id,
   },{token:""},(err,user)=>{
