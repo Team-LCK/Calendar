@@ -95,7 +95,15 @@ function App() {
         }
 
     }
-    
+
+    let title = "";
+
+    axios.post('http://localhost:5000/Todolist')
+    .then(res=>{
+        console.log(res);
+        title = res.title;
+    })
+
     return (
         <div>
         <table>
@@ -126,7 +134,10 @@ function App() {
                 <td>&nbsp;</td>
                 <td><h5>내용: {jsontext()}</h5></td>
             </table>
-        </div> : null}
+    </div> : null}
+        <div>
+            <h5>{title}</h5>
+        </div>
         </div>
     );
 }

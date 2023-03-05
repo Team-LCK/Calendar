@@ -10,7 +10,7 @@ const {User} =require('./User');
 const {Todo} = require('./Todolist');
 const cors=require("cors");
 const config=require('./config/key');
-const cors_origin=["http://localhost:5173"];
+let cors_origin=["http://localhost:5173"];
 
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -98,13 +98,13 @@ app.get('/api/users/logout',auth,(req,res)=>{
 })
 
 app.post('/Todolist', (req,res)=>{
+  console.log(req.body)
   const todo = new Todo(req.body);
-  todo.save((err,doc)=>{
-    if(err) return res.json({success:false,err});
-    return res.status(200).json({
-      success:true
-      })  
-   })
+  todo.save().then(()=>{
+    res.status(200).json({
+      title: todo.title
+    })
+  })
 })
 
 

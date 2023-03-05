@@ -2,9 +2,7 @@ import React ,{useState ,useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 
-function movetoCalendar(){
-    window.location.href="/Calendar";
-}
+
 
 function TodoList(){
 
@@ -45,17 +43,29 @@ function TodoList(){
             day: day
         }
 
-        setAllTodo(prev=>{
+        /*setAllTodo(prev=>{
             return [
                 ...prev,
                 dataToSubmit
             ]
-        })
-        
+        })*/
+
+        const savedData = localStorage.getItem("dataToSubmit")
+        if(savedData !== null)
+        {
+            localStorage.removeItem("dataToSubmit")
+            localStorage.setItem("dataToSubmit",JSON.stringify(dataToSubmit))
+        }
+
+       
+
         axios.post("http://localhost:5000/Todolist",dataToSubmit)
         .then(res => console.log(res));
     }
 
+    function movetoCalendar(){
+        window.location.href="/Calendar";
+    }
    return(
     <div>
         <table style={{marginLeft:"310px", marginTop: "20px"}}>
